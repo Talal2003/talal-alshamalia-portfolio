@@ -1,0 +1,36 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+
+  --color-primary: rgb(21 21 21);
+  --color-secondary: rgb(44 44 44);
+  --color-accent: rgb(240 214 182);
+  --color-accent-muted: rgb(240 214 182 / 0.6);
+  --color-accent-subtle: rgb(240 214 182 / 0.8);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    @apply bg-primary font-sans text-zinc-100 antialiased;
+  }
+
+  ::selection {
+    @apply bg-accent text-primary;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-accent;
+  }
+}
