@@ -17,6 +17,7 @@ export function Education() {
             startDate={item.startDate}
             endDate={item.endDate}
             highlights={[item.notes]}
+            tags={item.tags}
             isLast={index === items.length - 1}
           />
         ))}

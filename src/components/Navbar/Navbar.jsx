@@ -88,9 +88,11 @@ export function Navbar() {
             onNavigate('home')
           }}
         >
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-accent-subtle bg-secondary text-sm font-bold text-accent transition group-hover:border-accent/40">
-            T
-          </span>
+          <img
+            src="/talal.svg"
+            alt="Logo"
+            className="h-9 w-9"
+          />
           <span className="truncate font-display text-sm font-semibold tracking-tight text-zinc-100 sm:text-base">
             Talal Alshamalia
           </span>

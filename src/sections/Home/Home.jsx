@@ -33,6 +33,13 @@ export function Home() {
             transition={{ duration: 0.5, delay: 0.05 }}
           >
             {accentText(home.name)}
+            <span
+              aria-hidden
+              className={cn(
+                'ml-1.5 inline-block h-[0.85em] w-[3px] translate-y-[0.06em] align-baseline bg-accent',
+                !reduceMotion && 'animate-typing-caret'
+              )}
+            />
           </motion.h1>
           <motion.p
             className="mt-6 max-w-xl text-base leading-relaxed text-zinc-400 sm:text-lg"
