@@ -36,21 +36,63 @@ export function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-accent-subtle/40 bg-primary/80 backdrop-blur-md">
-      <nav className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8" aria-label="Primary">
+    <header className="sticky top-0 z-50 border-b border-accent-subtle/40 bg-primary/80 backdrop-blur-md relative">
+      {open && (
+        <>
+          <button
+            type="button"
+            className="fixed inset-0 z-40 bg-zinc-950/60 backdrop-blur-[2px] lg:hidden"
+            aria-label="Close menu"
+            onClick={() => setOpen(false)}
+          />
+          <div
+            id="mobile-nav"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Site sections"
+            className="absolute inset-x-0 top-full z-[41] max-h-[min(70vh,calc(100dvh-3.5rem))] overflow-y-auto border-b border-accent-subtle/40 bg-primary/98 shadow-lg backdrop-blur-md lg:hidden"
+          >
+            <ul className="mx-auto flex max-w-6xl flex-col gap-0.5 p-3 sm:px-6">
+              {NAV_ITEMS.map((item) => (
+                <li key={item.id}>
+                  <a
+                    href={`#${item.id}`}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      onNavigate(item.id)
+                    }}
+                    className={cn(
+                      'block rounded-lg px-3 py-2.5 text-sm font-medium text-zinc-400 transition hover:bg-secondary/60 hover:text-zinc-100',
+                      activeId === item.id && 'border border-accent bg-secondary/40 text-accent'
+                    )}
+                    aria-current={activeId === item.id ? 'true' : undefined}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </>
+      )}
+
+      <nav
+        className="relative z-50 mx-auto flex max-w-6xl items-center justify-between gap-2 px-3 py-3 sm:gap-4 sm:px-6 lg:px-8"
+        aria-label="Primary"
+      >
         <a
           href="#home"
-          className="group flex items-center gap-2 rounded-lg focus-visible:outline-offset-4"
+          className="group flex min-w-0 flex-1 items-center gap-2 rounded-lg focus-visible:outline-offset-4 sm:flex-initial"
           onClick={(e) => {
             e.preventDefault()
             onNavigate('home')
           }}
         >
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-accent-subtle bg-secondary text-sm font-bold text-accent transition group-hover:border-accent/40">
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-accent-subtle bg-secondary text-sm font-bold text-accent transition group-hover:border-accent/40">
             T
           </span>
-          <span className="font-display text-sm font-semibold tracking-tight text-zinc-100 sm:text-base">
-            Talal
+          <span className="truncate font-display text-sm font-semibold tracking-tight text-zinc-100 sm:text-base">
+            Talal Alshamalia
           </span>
         </a>
 
@@ -77,7 +119,7 @@ export function Navbar() {
 
         <button
           type="button"
-          className="inline-flex items-center justify-center rounded-lg border border-accent-subtle bg-secondary/60 p-2 text-zinc-100 transition hover:border-accent/40 hover:bg-secondary lg:hidden"
+          className="inline-flex shrink-0 items-center justify-center rounded-lg border border-accent-subtle bg-secondary/60 p-2 text-zinc-100 transition hover:border-accent/40 hover:bg-secondary lg:hidden"
           aria-expanded={open}
           aria-controls="mobile-nav"
           onClick={() => setOpen((v) => !v)}
@@ -92,39 +134,6 @@ export function Navbar() {
           </svg>
         </button>
       </nav>
-
-      <div
-        id="mobile-nav"
-        className={cn(
-          'fixed inset-0 z-40 bg-primary/95 backdrop-blur-md transition-opacity lg:hidden',
-          open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
-        )}
-        aria-hidden={!open}
-        onClick={() => setOpen(false)}
-      >
-        <ul
-          className="mx-auto flex max-w-6xl flex-col gap-1 px-4 pb-8 pt-20 sm:px-6"
-          onClick={(e) => e.stopPropagation()}
-        >
-          {NAV_ITEMS.map((item) => (
-            <li key={item.id}>
-              <a
-                href={`#${item.id}`}
-                className={cn(
-                  'block rounded-xl border border-transparent px-4 py-3 text-base font-medium text-zinc-300 transition hover:border-accent-subtle hover:bg-secondary/80 hover:text-zinc-50',
-                  activeId === item.id && 'border-accent-subtle bg-secondary text-accent'
-                )}
-                onClick={(e) => {
-                  e.preventDefault()
-                  onNavigate(item.id)
-                }}
-              >
-                {item.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
     </header>
   )
 }

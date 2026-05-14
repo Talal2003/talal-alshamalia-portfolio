@@ -1,5 +1,5 @@
 export default {
-  heading: 'Certificates',
+  heading: '/ certificates',
   items: [
     {
       id: 'cert-1',

@@ -1,5 +1,5 @@
 export default {
-  heading: 'Hardware projects',
+  heading: '/ hardware-projects',
   items: [
     {
       id: 'hw-1',

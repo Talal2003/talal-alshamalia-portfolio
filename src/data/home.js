@@ -1,8 +1,7 @@
 export default {
-  name: 'Talal Alshamalia',
-  title: 'Lorem ipsum dolor sit amet',
+  name: 'hi, **talal** here.',
   summary:
-    'Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam.',
+    'Software engineer and full-stack web developer who enjoys turning messy ideas into clean, usable systems. I spend most of my time building on the web, sometimes crafting smooth user experiences, sometimes digging into backend logic, and occasionally over-engineering for no good reason other than curiosity.',
   email: 'talal@alshamalia.com',
   emailButtonLabel: 'Say hi!',
   avatarAlt: 'ASCII-style portrait of Talal Alshamalia',

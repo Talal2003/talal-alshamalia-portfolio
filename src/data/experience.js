@@ -1,5 +1,5 @@
 export default {
-  heading: 'Experience',
+  heading: '/ experience',
   items: [
     {
       id: 'exp-1',

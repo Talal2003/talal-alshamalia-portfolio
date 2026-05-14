@@ -1,5 +1,5 @@
 export default {
-  heading: 'Software projects',
+  heading: '/ software-projects',
   items: [
     {
       id: 'sw-1',

@@ -1,5 +1,5 @@
 export default {
-  heading: 'Education',
+  heading: '/ education',
   items: [
     {
       id: 'edu-1',
