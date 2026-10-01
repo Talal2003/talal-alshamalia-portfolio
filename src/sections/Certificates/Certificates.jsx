@@ -1,10 +1,13 @@
+import { useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import certificates from '../../data/certificates.js'
 import SectionWrapper from '../../components/SectionWrapper/SectionWrapper.jsx'
+import MediaModal from '../../components/MediaModal/MediaModal.jsx'
 
 export function Certificates() {
   const reduceMotion = useReducedMotion()
   const { items, heading, subheading } = certificates
+  const [media, setMedia] = useState(null)
 
   return (
     <SectionWrapper id="certificates" eyebrow="Credentials" title={heading} subtitle={subheading}>
@@ -23,15 +26,20 @@ export function Certificates() {
               <p className="mt-3 text-sm font-medium text-accent">{cert.issuer}</p>
               <p className="mt-1 font-mono text-xs text-zinc-500">{cert.date}</p>
               <div className="mt-4 flex-1" />
-              {cert.credentialUrl ? (
-                <a
-                  href={cert.credentialUrl}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="inline-flex text-sm font-semibold text-accent underline-offset-4 hover:underline"
+              {cert.pdf ? (
+                <button
+                  type="button"
+                  onClick={() =>
+                    setMedia({
+                      type: 'pdf',
+                      src: cert.pdf,
+                      title: `${cert.name} certificate`,
+                    })
+                  }
+                  className="inline-flex self-start text-sm font-semibold text-accent underline-offset-4 hover:underline"
                 >
-                  View issuer ↗
-                </a>
+                  View certificate
+                </button>
               ) : (
                 <span className="text-xs text-zinc-600">Certificate on file</span>
               )}
@@ -39,6 +47,7 @@ export function Certificates() {
           </motion.li>
         ))}
       </ul>
+      <MediaModal media={media} onClose={() => setMedia(null)} />
     </SectionWrapper>
   )
 }
