@@ -9,6 +9,15 @@ export default {
       startDate: '2020',
       endDate: '2026',
       notes: 'GPA: 3.663',
+      diploma: {
+        type: 'certificate',
+        title: 'B.Sc. Computer Science and Engineering Diploma',
+        src: '/education/diploma-cse.webp',
+        alt: 'University of Toledo diploma, B.Sc. Computer Science and Engineering',
+        credentialId: '26LL-D7ZV-MWA6',
+        issuedDate: 'May 2026',
+        verifyUrl: 'https://www.utoledo.edu/offices/registrar/cediploma/certificate-validation.html',
+      },
     },
     {
       id: 'edu-2',
@@ -18,6 +27,15 @@ export default {
       startDate: '2022',
       endDate: '2026',
       notes: 'GPA: 3.663',
+      diploma: {
+        type: 'certificate',
+        title: 'B.Sc. Electrical Engineering Diploma',
+        src: '/education/diploma-ee.webp',
+        alt: 'University of Toledo diploma, B.Sc. Computer Science and Engineering',
+        credentialId: '26ST-TOIK-MTAL',
+        issuedDate: 'May 2026',
+        verifyUrl: 'https://www.utoledo.edu/offices/registrar/cediploma/certificate-validation.html',
+      },
     },
   ],
 }

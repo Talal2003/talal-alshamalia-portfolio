@@ -76,6 +76,85 @@ function PdfPreview({ src, title }) {
     </div>
   )
 }
+function CopyButton({ text, label = 'Copy' }) {
+  const [copied, setCopied] = useState(false)
+
+  useEffect(() => {
+    if (!copied) return undefined
+    const t = setTimeout(() => setCopied(false), 1800)
+    return () => clearTimeout(t)
+  }, [copied])
+
+  async function handleCopy() {
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(text)
+      } else {
+        // Fallback for older browsers / non-secure contexts
+        const ta = document.createElement('textarea')
+        ta.value = text
+        ta.setAttribute('readonly', '')
+        ta.style.position = 'fixed'
+        ta.style.opacity = '0'
+        document.body.appendChild(ta)
+        ta.select()
+        document.execCommand('copy')
+        document.body.removeChild(ta)
+      }
+      setCopied(true)
+    } catch {
+      setCopied(false)
+    }
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={handleCopy}
+      className="shrink-0 rounded-md border border-accent-subtle bg-secondary/60 px-2 py-1 text-xs font-semibold text-accent transition hover:border-accent/40 hover:bg-secondary"
+    >
+      <span aria-live="polite">{copied ? 'Copied ✔' : label}</span>
+    </button>
+  )
+}
+function CertificatePreview({ media }) {
+  const { src, alt, credentialId, issuedDate, verifyUrl } = media
+
+  return (
+    <div className="flex flex-col gap-5 p-4 sm:p-6">
+      <AwardImage src={src} alt={alt ?? 'Diploma'} />
+
+      <dl className="grid gap-3 rounded-xl border border-accent-subtle/40 bg-secondary/40 p-4 text-sm sm:grid-cols-2">
+        <div>
+          <dt className="text-xs uppercase tracking-wide text-zinc-400">Credential ID</dt>
+          <dd className="mt-1 flex items-center gap-2">
+            <span className="min-w-0 select-all break-all font-mono text-zinc-50">
+              {credentialId ?? '—'}
+            </span>
+            {credentialId ? (
+              <CopyButton text={credentialId} label="Copy ID" />
+            ) : null}
+          </dd>
+        </div>
+        <div>
+          <dt className="text-xs uppercase tracking-wide text-zinc-400">Issued</dt>
+          <dd className="mt-1 text-zinc-50">{issuedDate ?? '—'}</dd>
+        </div>
+      </dl>
+
+      {verifyUrl ? (
+        <a
+          href={verifyUrl}
+          target="_blank"
+          rel="noreferrer noopener"
+          className="self-center rounded-lg border border-accent/40 bg-secondary/60 px-4 py-2 text-sm font-semibold text-accent transition hover:bg-secondary hover:underline"
+        >
+          Validate Now ✔
+        </a>
+      ) : null}
+    </div>
+  )
+}
 
 /**
  * @param {object} props
@@ -170,6 +249,7 @@ export function MediaModal({ media, onClose }) {
           ) : null}
 
           {media.type === 'pdf' ? <PdfPreview src={media.src} title={media.title} /> : null}
+          {media.type === 'certificate' ? <CertificatePreview media={media} /> : null}
         </div>
       </motion.div>
     </div>

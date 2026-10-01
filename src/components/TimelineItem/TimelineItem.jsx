@@ -10,7 +10,7 @@ import { cn } from '../../utils/cn.js'
  * @param {string[]} props.highlights
  * @param {boolean} [props.isLast]
  */
-export function TimelineItem({ role, company, location, startDate, endDate, highlights, isLast }) {
+export function TimelineItem({ role, company, location, startDate, endDate, highlights, isLast, children }) {
   return (
     <article className={cn('relative pb-12 sm:pb-16', !isLast && 'border-b border-accent-subtle/30')}>
       <div className="grid gap-6 sm:grid-cols-[minmax(0,220px)_1fr] sm:gap-10">
@@ -33,6 +33,7 @@ export function TimelineItem({ role, company, location, startDate, endDate, high
               <li key={item}>{item}</li>
             ))}
           </ul>
+          {children ? <div className="mt-5">{children}</div> : null}
         </div>
       </div>
     </article>
