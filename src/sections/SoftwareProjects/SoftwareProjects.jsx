@@ -7,9 +7,9 @@ export function SoftwareProjects() {
 
   return (
     <SectionWrapper id="software" eyebrow="Code" title={heading} subtitle={subheading}>
-      <ul className="grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
+      <ul className="flex flex-wrap justify-center gap-6">
         {items.map((project) => (
-          <li key={project.id}>
+          <li key={project.id} className="min-w-0 max-w-md flex-[1_1_min(100%,18rem)]">
             <ProjectCard
               title={project.title}
               description={project.description}

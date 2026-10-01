@@ -1,5 +1,9 @@
+import { Link } from 'react-router-dom'
 import { motion, useReducedMotion } from 'framer-motion'
 import { cn } from '../../utils/cn.js'
+
+const actionClassName =
+  'relative z-10 inline-flex items-center justify-center gap-1.5 rounded-lg border border-accent/40 bg-secondary/60 px-3 py-1.5 text-sm font-semibold text-accent transition hover:border-accent hover:bg-secondary hover:text-accent-strong'
 
 /**
  * @param {object} props
@@ -7,17 +11,29 @@ import { cn } from '../../utils/cn.js'
  * @param {string} props.description
  * @param {string[]} props.tags
  * @param {{ label: string, href: string, external?: boolean }[]} [props.links]
+ * @param {{ label: string, to?: string, href?: string, external?: boolean, onClick?: () => void }[]} [props.actions]
  * @param {string} [props.image]
  * @param {string} [props.imageAlt]
  * @param {string} [props.className]
  */
-export function ProjectCard({ title, description, tags, links = [], image, imageAlt, className }) {
+export function ProjectCard({
+  title,
+  description,
+  tags,
+  links = [],
+  actions = [],
+  image,
+  imageAlt,
+  to,
+  className,
+}) {
   const reduceMotion = useReducedMotion()
 
   return (
     <motion.article
       className={cn(
-        'group flex h-full flex-col overflow-hidden rounded-2xl border border-accent-subtle bg-secondary/40 backdrop-blur-sm transition-colors hover:border-accent/35 hover:bg-secondary/70',
+        'group relative flex h-full flex-col overflow-hidden rounded-2xl border border-accent-subtle bg-secondary/40 backdrop-blur-sm transition-colors hover:border-accent/35 hover:bg-secondary/70',
+        to && 'cursor-pointer',
         className
       )}
       whileHover={reduceMotion ? undefined : { y: -3 }}
@@ -44,7 +60,16 @@ export function ProjectCard({ title, description, tags, links = [], image, image
 
       <div className="flex flex-1 flex-col p-5 sm:p-6">
         <h3 className="font-display text-lg font-semibold tracking-tight text-zinc-50 sm:text-xl">
-          {title}
+          {to ? (
+            <Link
+              to={to}
+              className="after:absolute after:inset-0 after:content-[''] focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-accent"
+            >
+              {title}
+            </Link>
+          ) : (
+            title
+          )}
         </h3>
         <p className="mt-2 flex-1 text-sm leading-relaxed text-zinc-400 sm:text-base">{description}</p>
 
@@ -59,14 +84,45 @@ export function ProjectCard({ title, description, tags, links = [], image, image
           ))}
         </ul>
 
-        {links.length > 0 ? (
-          <div className="mt-5 flex flex-wrap gap-3">
+        {actions.length > 0 || links.length > 0 ? (
+          <div className="mt-5 flex flex-wrap gap-2">
+            {actions.map((action) => {
+              if (action.to) {
+                return (
+                  <Link key={action.label} to={action.to} className={actionClassName}>
+                    {action.label}
+                  </Link>
+                )
+              }
+              if (action.href) {
+                return (
+                  <a
+                    key={action.label}
+                    href={action.href}
+                    {...(action.external ? { target: '_blank', rel: 'noreferrer noopener' } : {})}
+                    className={actionClassName}
+                  >
+                    {action.label}
+                    {action.external ? (
+                      <span className="text-xs opacity-70" aria-hidden>
+                        ↗
+                      </span>
+                    ) : null}
+                  </a>
+                )
+              }
+              return (
+                <button key={action.label} type="button" onClick={action.onClick} className={actionClassName}>
+                  {action.label}
+                </button>
+              )
+            })}
             {links.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
                 {...(link.external ? { target: '_blank', rel: 'noreferrer noopener' } : {})}
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent underline-offset-4 transition hover:text-accent-strong hover:underline"
+                className="relative z-10 inline-flex items-center gap-1.5 px-1 py-1.5 text-sm font-semibold text-accent underline-offset-4 transition hover:text-accent-strong hover:underline"
               >
                 {link.label}
                 {link.external ? (

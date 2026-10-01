@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { cn } from '../../utils/cn.js'
 import { NAV_ITEMS, NAV_SECTION_IDS } from '../../styles/theme.js'
 import { useActiveSection } from '../../hooks/useActiveSection.js'
@@ -11,7 +12,11 @@ function scrollToId(id) {
 
 export function Navbar() {
   const [open, setOpen] = useState(false)
-  const activeId = useActiveSection(sectionIds)
+  const location = useLocation()
+  const navigate = useNavigate()
+  const scrolledActiveId = useActiveSection(sectionIds)
+  const isHome = location.pathname === '/'
+  const activeId = isHome ? scrolledActiveId : location.pathname.startsWith('/hardware') ? 'hardware' : ''
 
   useEffect(() => {
     if (!open) return undefined
@@ -32,6 +37,10 @@ export function Navbar() {
 
   const onNavigate = (id) => {
     setOpen(false)
+    if (!isHome) {
+      navigate('/', { state: { scrollTo: id } })
+      return
+    }
     scrollToId(id)
   }
 

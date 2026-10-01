@@ -62,4 +62,4 @@ Utilities include `bg-primary`, `bg-secondary`, `text-accent`, and `border-accen
 
 ## Deployment note
 
-This app uses `BrowserRouter`. Hosts such as GitHub Pages or static file servers must redirect unknown paths to `index.html`, or you can switch to `HashRouter` in `src/App.jsx` if you need hash-based URLs without server configuration.
+This app uses `HashRouter` in `src/App.jsx`, so project detail URLs look like `/#/hardware/polarized-window` and work on GitHub Pages without extra rewrite rules.

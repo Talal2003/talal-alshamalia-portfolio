@@ -21,13 +21,6 @@ export default {
       issuer: 'Lorem ipsum dolor',
       date: '2000-01',
       credentialUrl: 'https://talal.alshamalia.com',
-    },
-    {
-      id: 'cert-4',
-      name: 'Lorem ipsum dolor sit amet consectetur adipiscing',
-      issuer: 'Lorem ipsum dolor',
-      date: '2000-01',
-      credentialUrl: 'https://talal.alshamalia.com',
-    },
+    }
   ],
 }

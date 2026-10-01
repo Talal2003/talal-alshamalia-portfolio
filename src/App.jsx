@@ -1,4 +1,5 @@
-import { HashRouter, Route, Routes } from 'react-router-dom'
+import { HashRouter, Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
 import Navbar from './components/Navbar/Navbar.jsx'
 import Footer from './components/Footer/Footer.jsx'
 import Home from './sections/Home/Home.jsx'
@@ -8,8 +9,32 @@ import Education from './sections/Education/Education.jsx'
 import Certificates from './sections/Certificates/Certificates.jsx'
 import HardwareProjects from './sections/HardwareProjects/HardwareProjects.jsx'
 import SoftwareProjects from './sections/SoftwareProjects/SoftwareProjects.jsx'
+import HardwareProjectDetail from './pages/HardwareProjectDetail/HardwareProjectDetail.jsx'
+
+function scrollToId(id) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
+
+function PageShell() {
+  return (
+    <>
+      <Navbar />
+      <Outlet />
+      <Footer />
+    </>
+  )
+}
 
 function HomePage() {
+  const location = useLocation()
+
+  useEffect(() => {
+    const id = location.state?.scrollTo
+    if (!id) return undefined
+    const t = window.setTimeout(() => scrollToId(id), 40)
+    return () => window.clearTimeout(t)
+  }, [location.state])
+
   return (
     <>
       <a
@@ -18,7 +43,6 @@ function HomePage() {
       >
         Skip to main content
       </a>
-      <Navbar />
       <main>
         <Home />
         <AboutMe />
@@ -28,7 +52,6 @@ function HomePage() {
         <HardwareProjects />
         <SoftwareProjects />
       </main>
-      <Footer />
     </>
   )
 }
@@ -37,7 +60,11 @@ export default function App() {
   return (
     <HashRouter>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route element={<PageShell />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/hardware/:projectId" element={<HardwareProjectDetail />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Route>
       </Routes>
     </HashRouter>
   )

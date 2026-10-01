@@ -8,10 +8,11 @@ export function Certificates() {
 
   return (
     <SectionWrapper id="certificates" eyebrow="Credentials" title={heading} subtitle={subheading}>
-      <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
+      <ul className="flex flex-wrap justify-center gap-5">
         {items.map((cert, index) => (
           <motion.li
             key={cert.id}
+            className="min-w-0 max-w-md flex-[1_1_min(100%,18rem)]"
             initial={reduceMotion ? false : { opacity: 0, y: 18 }}
             whileInView={reduceMotion ? false : { opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-10%' }}
