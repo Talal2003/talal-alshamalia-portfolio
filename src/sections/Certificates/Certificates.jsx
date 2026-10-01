@@ -26,13 +26,13 @@ export function Certificates() {
               <p className="mt-3 text-sm font-medium text-accent">{cert.issuer}</p>
               <p className="mt-1 font-mono text-xs text-zinc-500">{cert.date}</p>
               <div className="mt-4 flex-1" />
-              {cert.pdf ? (
+              {cert.src ? (
                 <button
                   type="button"
                   onClick={() =>
                     setMedia({
-                      type: 'pdf',
-                      src: cert.pdf,
+                      type: 'image',
+                      src: cert.src,
                       title: `${cert.name} certificate`,
                     })
                   }

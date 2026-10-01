@@ -8,9 +8,7 @@ function AwardImage({ src, alt }) {
   if (failed || !src) {
     return (
       <div className="rounded-xl border border-accent-subtle bg-secondary/50 px-6 py-12 text-center text-sm leading-relaxed text-zinc-400">
-        Award photo is not in the site files yet. Add it as{' '}
-        <code className="text-accent">public/hardware-projects/polarized-window/award.webp</code>. The citation is shown
-        below.
+        This image is not in the site files yet.
       </div>
     )
   }
